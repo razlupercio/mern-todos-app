@@ -11,7 +11,7 @@ let Todo = require('./todo.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true });
+mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 const connection = mongoose.connection;
 
 connection.once('open', function() {
@@ -62,6 +62,16 @@ todoRoutes.route('/update/:id').post(function(req, res){
       .catch(err =>{
         res.status(400).send("Update not possible");
       });
+  });
+});
+
+todoRoutes.route('/delete/:id').delete(function(req, res){
+  Todo.findByIdAndRemove(req.params.id, function(err, todo){
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(todo);
+    }
   });
 });
 

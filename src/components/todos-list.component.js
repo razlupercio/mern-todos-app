@@ -4,25 +4,41 @@ import TodoTableRow from './todoTableRow';
 
 export default class TodosList extends Component {
 
+_isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {todos: []};
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     axios.get('http://localhost:4000/todos/')
       .then(response => {
-        this.setState({ todos: response.data });
+        if (this._isMounted) {
+          this.setState({ todos: response.data });
+        }
       })
       .catch(function (error){
         console.log(error);
       })
   }
 
+  componentDidMount() {
+    this._isMounted = true
+  }
+
+  componentWillUnmount(){
+      this._isMounted = false;
+    }
+
   componentDidUpdate() {
     axios.get('http://localhost:4000/todos/')
       .then(response => {
+        if(this._isMounted) {
         this.setState({ todos: response.data });
+        }
       })
       .catch(function (error){
         console.log(error);

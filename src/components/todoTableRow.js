@@ -27,10 +27,9 @@ export default class TodoTableRow extends Component {
                 <td className={this.props.todo.todo_completed ? 'completed' : ''}>{this.props.todo.todo_responsible}</td>
                 <td className={this.props.todo.todo_completed ? 'completed' : ''}>{this.props.todo.todo_priority}</td>
                 <td>
-                    <Link to={"/edit/"+this.props.todo._id}>Edit</Link>
-                </td>
-                <td>
-                    <Button onClick={this.deleteTodo} size="sm" variant="danger">Delete</Button>
+                    <Link to={"/edit/"+this.props.todo._id}>editar</Link>
+                    -
+                    <Button onClick={this.deleteTodo} size="sm" variant="danger">eliminar</Button>
                 </td>
           </tr>
         );
